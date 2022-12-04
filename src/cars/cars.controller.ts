@@ -1,6 +1,6 @@
 // El controlador escucha solicitudes de los clientes
 // y emite respuesta
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { CarsService } from './cars.service';
 
 @Controller('cars')  //  /cars
@@ -23,8 +23,28 @@ export class CarsController {
     getCarById(@Param('id', ParseIntPipe) id: number) {
         console.log({ id })  // ahora si es un numero
         // throw new Error('Auxilio') //nest tiene una capa para manejar las excepciones, nest no se rompe aunq no he tenido nada para controlar esta excepcion
-        return this.carsService.findOneById(id) // si id es incorrecto como 3a, ya me responde con 400 'bad request', EXCELENTE asi de rápido y fácil
-        
+        return this.carsService.findOneById(id) // si id es incorrecto como 3a, ya me responde con 400 'bad request', EXCELENTE asi de rápido y fácil     
+    }
+
+    @Post()
+    createCar( @Body() body: any ){
+        return body;
+    }
+
+    @Patch(':id')
+    updateCar( 
+        @Param('id', ParseIntPipe) id:number,
+        @Body() body: any )
+    {
+        return body;
+    }
+
+    @Delete(':id')
+    deleteCar( @Param('id', ParseIntPipe) id:number ){
+        return {
+            method: 'delete',
+            id
+        }
     }
 
 }
