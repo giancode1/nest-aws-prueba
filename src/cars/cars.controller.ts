@@ -1,6 +1,6 @@
 // El controlador escucha solicitudes de los clientes
 // y emite respuesta
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { CarsService } from './cars.service';
 
 @Controller('cars')  //  /cars
@@ -20,10 +20,11 @@ export class CarsController {
     }
 
     @Get(':id') // id, puede ser cualquier nombre y tantos como quieras:  :id/:brand
-    getCarById(@Param('id') id: string) { // cualquier inf que viene por el url es un string
-        console.log({ id })  
-        return this.carsService.findOneById(+id) // ! si envio un id como 3a si lo resuelve 200, con +id me sale NaN pero NaN es un numero, contradictorio :/ pero asi es
-        //se debe mejorar la respuesta del backend, deberia dar un 400 en el caso comentado anterior
+    getCarById(@Param('id', ParseIntPipe) id: number) {
+        console.log({ id })  // ahora si es un numero
+        // throw new Error('Auxilio') //nest tiene una capa para manejar las excepciones, nest no se rompe aunq no he tenido nada para controlar esta excepcion
+        return this.carsService.findOneById(id) // si id es incorrcto como 3a, ya me responde con 400 'bad request', EXCELENTE asi de rápido y fácil
+        // ! si envio 4 como id, me responde 200 aunq no exista, correcion prox commit
     }
 
 }
