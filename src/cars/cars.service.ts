@@ -1,7 +1,7 @@
 // Servicios     todos los servicios son providers, no todos los proviers son servicios
 // alojan logica de negoio de tal manera que sean reutilizable
 // mediante inyección de dependencias
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()  // decorador Injectable
 export class CarsService {
@@ -29,6 +29,11 @@ export class CarsService {
     }
 
     findOneById(id: number){
-        return this.cars.find(car => car.id===id);
+        const car = this.cars.find(car => car.id===id);
+
+        //le doy mas info al user q consuma la api , NotFoundException lazna 404
+        if(!car) throw new NotFoundException(`Car with id '${ id }' not found`);
+        
+        return car;
     }
 }

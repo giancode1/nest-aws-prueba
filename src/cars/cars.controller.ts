@@ -23,8 +23,8 @@ export class CarsController {
     getCarById(@Param('id', ParseIntPipe) id: number) {
         console.log({ id })  // ahora si es un numero
         // throw new Error('Auxilio') //nest tiene una capa para manejar las excepciones, nest no se rompe aunq no he tenido nada para controlar esta excepcion
-        return this.carsService.findOneById(id) // si id es incorrcto como 3a, ya me responde con 400 'bad request', EXCELENTE asi de rápido y fácil
-        // ! si envio 4 como id, me responde 200 aunq no exista, correcion prox commit
+        return this.carsService.findOneById(id) // si id es incorrecto como 3a, ya me responde con 400 'bad request', EXCELENTE asi de rápido y fácil
+        
     }
 
 }
