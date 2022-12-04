@@ -1,5 +1,6 @@
 // El controlador escucha solicitudes de los clientes
 // y emite respuesta
+// no maneja logica de negocio
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, ParseUUIDPipe, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dto/create-car.dto';
@@ -30,7 +31,7 @@ export class CarsController {
     @Post()
     //@UsePipes(ValidationPipe) //ahora si valida con el dto, pero puede ir arriba ya que tambn sera usado por el Patch
     createCar( @Body() createCarDto: CreateCarDto ){
-        return createCarDto;
+        return this.carsService.create(createCarDto)
     }
 
     @Patch(':id') // puedes poner un pipe a nivel de controlador, o un metodo en el controlador
