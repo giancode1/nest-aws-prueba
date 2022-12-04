@@ -1,6 +1,6 @@
 // El controlador escucha solicitudes de los clientes
 // y emite respuesta
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
 import { CarsService } from './cars.service';
 
 @Controller('cars')  //  /cars
@@ -19,8 +19,9 @@ export class CarsController {
     }
 
     @Get(':id')
-    getCarById(@Param('id') id: string) {
-        //console.log({ id })  
+    getCarById(@Param('id', ParseUUIDPipe) id: string) {
+        //Si no es un uuid ni siquiera va a llegar al servicio
+        // el servicio es el cual trabaja con la db
         return this.carsService.findOneById(id)
     }
 
