@@ -6,3 +6,6 @@ async function bootstrap() {
   await app.listen(3000);
 }
 bootstrap();
+
+// puedes agregar un pipe a nivel global de aplicación
+// puedes poner middlewares y demas a diferentes nivel depende de lo que necesites

@@ -1,8 +1,13 @@
+import { IsString } from "class-validator";
+
 // los DTOs siempre son clases
 export class CreateCarDto {
-    
-    readonly brand: string;
 
+    // @IsString({ message: `mi mensaje personalizado`})
+    @IsString()
+    readonly brand: string;
+    
+    @IsString()
     readonly model: string;
 }
 
