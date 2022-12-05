@@ -1,10 +1,10 @@
 // Servicios     todos los servicios son providers, no todos los proviers son servicios
 // alojan logica de negoio de tal manera que sean reutilizable
 // mediante inyección de dependencias
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 import { Car } from './interfaces/car.interface';
-import { CreateCarDto } from './dto/create-car.dto';
+import { CreateCarDto, UpdateCarDto } from './dto';
 
 @Injectable()  // decorador Injectable
 export class CarsService {
@@ -47,5 +47,37 @@ export class CarsService {
         }
         this.cars.push(car);
         return car;
+    }
+
+    update( id:string, updateCarDto: UpdateCarDto ){
+        //principio DRY
+        let carDB = this.findOneById(id);
+
+        //en teoria este if esta demas dice fernando pero bueno
+        if(updateCarDto.id && updateCarDto.id !== id)  //el id del query con el id del body en caso de tenerlo deben ser iguales
+            throw new BadRequestException(`Car id in not valid inside body`);
+
+        const index = this.cars.findIndex((car) => car.id === id);
+        carDB = {
+            ...carDB,
+            ...updateCarDto,
+            id,
+        };
+        this.cars[index] = carDB;
+        
+        // forma original
+        // this.cars = this.cars.map( car => {
+        //     if (car.id === id){
+        //         carDB = {
+        //             ...carDB,        //original
+        //             ...updateCarDto,  //actualizado
+        //             id              // se queda este id
+        //         }
+        //         return carDB;
+        //     }
+        //     return car;
+        // })
+
+        return carDB;
     }
 }

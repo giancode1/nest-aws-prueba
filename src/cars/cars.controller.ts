@@ -4,6 +4,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, ParseUUIDPipe, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dto/create-car.dto';
+import { UpdateCarDto } from './dto/update-car.dto';
 
 @Controller('cars')  //  /cars   //puedes poner un pipe a nivel global de controlador
 @UsePipes(ValidationPipe) // a esta clase controlador todos sus metodos usaan el ValidationPipe
@@ -34,12 +35,12 @@ export class CarsController {
         return this.carsService.create(createCarDto)
     }
 
-    @Patch(':id') // puedes poner un pipe a nivel de controlador, o un metodo en el controlador
-    updateCar(   //puedes agregar tantos pipes como quieras, aqui a nivel de parametro
-        @Param('id', ParseIntPipe) id:number,
-        @Body() body: any )
+    @Patch(':id')  // puedes poner un pipe a nivel de controlador, o un metodo en el controlador
+    updateCar(     // puedes agregar tantos pipes como quieras, aqui a nivel de parametro
+        @Param('id', ParseUUIDPipe) id:string,
+        @Body() updateCarDto: UpdateCarDto )
     {
-        return body;
+        return this.carsService.update(id, updateCarDto)
     }
 
     @Delete(':id')
