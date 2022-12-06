@@ -7,16 +7,14 @@ import { CreateCarDto } from './dto/create-car.dto';
 import { UpdateCarDto } from './dto/update-car.dto';
 
 @Controller('cars')  //  /cars   //puedes poner un pipe a nivel global de controlador
-@UsePipes(ValidationPipe) // a esta clase controlador todos sus metodos usaan el ValidationPipe
+//@UsePipes(ValidationPipe) // a esta clase controlador todos sus metodos usaan el ValidationPipe
 //pero aun mejor hagamosla global, prox clase
 export class CarsController {
 
     //inyeccion de dependencias: crea una dependecia en el constructor
     constructor(
         private readonly carsService: CarsService
-    ) {
-
-    }
+    ) {}
 
     @Get()
     getAllCars() {
