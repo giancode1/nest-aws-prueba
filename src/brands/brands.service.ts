@@ -52,6 +52,9 @@ export class BrandsService {
 
   remove(id: string) {
     this.brands = this.brands.filter( brand => brand.id !== id )
+  }
 
+  fillCarsWithSeedData(brands: Brand[]){  //esto no en la vida real porq se inserta ne la db
+    this.brands = brands;
   }
 }

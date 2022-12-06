@@ -86,4 +86,8 @@ export class CarsService {
         this.cars = this.cars.filter(car => car.id !== id);
         // return implicito
     }
+
+    fillCarsWithSeedData(cars: Car[]){  //esto no en la vida real porq se inserta ne la db
+        this.cars = cars;
+    }
 }
